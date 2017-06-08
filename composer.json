@@ -1,0 +1,23 @@
+{
+    "name": "elstc/cakephp-verify-token",
+    "description": "Elastic/VerifyToken plugin for CakePHP",
+    "type": "cakephp-plugin",
+    "licence": "MIT",
+    "require": {
+        "cakephp/cakephp": "^3.4"
+    },
+    "require-dev": {
+        "phpunit/phpunit": "^5.7|^6.0"
+    },
+    "autoload": {
+        "psr-4": {
+            "Elastic\\VerifyToken\\": "src"
+        }
+    },
+    "autoload-dev": {
+        "psr-4": {
+            "Elastic\\VerifyToken\\Test\\": "tests",
+            "Cake\\Test\\": "./vendor/cakephp/cakephp/tests"
+        }
+    }
+}
