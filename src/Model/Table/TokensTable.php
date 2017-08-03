@@ -2,7 +2,7 @@
 
 namespace Elastic\VerifyToken\Model\Table;
 
-use Cake\I18n\Time;
+use Cake\I18n\FrozenTime;
 use Cake\ORM\Query;
 use Cake\ORM\RulesChecker;
 use Cake\ORM\Table;
@@ -98,7 +98,7 @@ class TokensTable extends Table
     {
         $conditions = [
             'token' => $token,
-            'expires >=' => Time::now(),
+            'expires >=' => FrozenTime::now(),
         ];
         if (!empty($type)) {
             $conditions['type'] = $type;
