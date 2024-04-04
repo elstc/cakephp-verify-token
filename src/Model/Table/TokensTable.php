@@ -22,9 +22,9 @@ class TokensTable extends Table
      */
     public function initialize(array $config)
     {
-        $this->table('tokens');
-        $this->displayField('id');
-        $this->primaryKey('id');
+        $this->setTable('tokens');
+        $this->setDisplayField('id');
+        $this->setPrimaryKey('id');
         $this->addBehavior('Timestamp', [
             'events' => [
                 'Model.beforeSave' => [
@@ -45,31 +45,31 @@ class TokensTable extends Table
     {
         $validator
             ->add('id', 'valid', ['rule' => 'numeric'])
-            ->allowEmpty('id', 'create');
+            ->allowEmptyString('id', null, 'create');
 
         $validator
             ->requirePresence('table', 'create')
-            ->notEmpty('table');
+            ->notEmptyString('table');
 
         $validator
             ->requirePresence('type', 'create')
-            ->notEmpty('type');
+            ->notEmptyString('type');
 
         $validator
-            ->allowEmpty('token');
+            ->allowEmptyString('token');
 
         $validator
-            ->allowEmpty('token_secret');
+            ->allowEmptyString('token_secret');
 
         $validator
-            ->allowEmpty('payload');
+            ->allowEmptyString('payload');
 
         $validator
-            ->allowEmpty('expires');
+            ->allowEmptyDateTime('expires');
 
         $validator
-            ->allowEmpty('created_at')
-            ->allowEmpty('updated_at');
+            ->allowEmptyDateTime('created_at')
+            ->allowEmptyDateTime('updated_at');
 
         return $validator;
     }

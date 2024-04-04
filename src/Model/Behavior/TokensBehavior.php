@@ -28,7 +28,7 @@ class TokensBehavior extends Behavior
             'className' => 'Elastic/VerifyToken.Tokens',
             'foreignKey' => 'foreign_id',
             'conditions' => [
-                'table' => $this->_table->alias(),
+                'table' => $this->_table->getAlias(),
             ],
             'sort' => ['expires' => 'desc'],
             'dependent' => true,
@@ -45,7 +45,7 @@ class TokensBehavior extends Behavior
     {
         if (!$entity->has($type)) {
             $token = $this->_table->Tokens->newEntity();
-            $token->table = $this->_table->alias();
+            $token->table = $this->_table->getAlias();
             $token->type = $type;
             $token->foreign_id = $entity->id;
         } else {
