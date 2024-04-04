@@ -7,7 +7,6 @@ use Cake\Form\Schema;
 use Cake\ORM\Entity;
 use Cake\ORM\Locator\LocatorAwareTrait;
 use Cake\ORM\Table;
-use Cake\ORM\TableRegistry;
 use Cake\Utility\Hash;
 use Cake\Validation\Validator;
 use InvalidArgumentException;
@@ -48,7 +47,7 @@ trait TokenValidatorTrait
      */
     public function setTable($table)
     {
-        if (is_subclass_of($table, '\Cake\ORM\Table')) {
+        if (is_subclass_of($table, \Cake\ORM\Table::class)) {
             $this->table = $table;
         } else {
             $this->table = $this->getTableLocator()->get($table);
@@ -75,7 +74,7 @@ trait TokenValidatorTrait
     {
         $tableName = $this->table->getAlias();
         $type = $this->settings['type'];
-        $tokenTable = TableRegistry::get('Elastic/VerifyToken.Tokens');
+        $tokenTable = $this->getTableLocator()->get('Elastic/VerifyToken.Tokens');
 
         $validator
             ->notEmptyString('token', __('トークンは必ず入力してください。'))
@@ -100,7 +99,7 @@ trait TokenValidatorTrait
     public function getEntityByToken($token)
     {
         $tokenTable = $this->getTableLocator()->get('Elastic/VerifyToken.Tokens');
-        $foreignId = $tokenTable->getForeignIdByToken($token, $this->settings['type'], $this->table->alias());
+        $foreignId = $tokenTable->getForeignIdByToken($token, $this->settings['type'], $this->table->getAlias());
 
         $user = $this->table->get($foreignId);
 
@@ -121,7 +120,7 @@ trait TokenValidatorTrait
     public function validateToken($token)
     {
         $tokenTable = $this->getTableLocator()->get('Elastic/VerifyToken.Tokens');
-        $valid = $tokenTable->validateToken($token, $this->settings['type'], $this->table->alias());
+        $valid = $tokenTable->validateToken($token, $this->settings['type'], $this->table->getAlias());
         if (!$valid) {
             throw new InvalidArgumentException(__('無効なトークンです。'));
         }
